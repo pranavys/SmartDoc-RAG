@@ -1,3 +1,4 @@
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.db.models import Document, DocumentChunk
@@ -35,3 +36,18 @@ def create_document_chunk(
     db.refresh(chunk)
 
     return chunk
+
+def search_similar_chunks(
+    db: Session,
+    query_embedding: list[float],
+    limit: int = 5,
+) -> list[DocumentChunk]:
+    statement = (
+        select(DocumentChunk)
+        .order_by(
+            DocumentChunk.embedding.cosine_distance(query_embedding)
+        )
+        .limit(limit)
+    )
+
+    return list(db.scalars(statement).all())

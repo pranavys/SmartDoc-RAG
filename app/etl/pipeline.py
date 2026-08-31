@@ -13,7 +13,12 @@ def process_document(file_path: str) -> list[str]:
 
     # Transform
     cleaned_text = clean_text(raw_text)
-    chunks = chunk_text(cleaned_text)
+    # chunks = chunk_text(cleaned_text)
+    chunks = chunk_text(
+    cleaned_text,
+    chunk_size=200,
+    chunk_overlap=30,
+)
 
     return chunks
 
@@ -24,7 +29,12 @@ def ingest_document(file_path: str) -> None:
 
     # Transform
     cleaned_text = clean_text(raw_text)
-    chunks = chunk_text(cleaned_text)
+    # chunks = chunk_text(cleaned_text)
+    chunks = chunk_text(
+    cleaned_text,
+    chunk_size=200,
+    chunk_overlap=30,
+)
 
     # Load
     db = SessionLocal()
