@@ -1,6 +1,7 @@
 from app.db.database import SessionLocal
 from app.db.repository import search_similar_chunks
 from app.rag.embeddings import generate_embedding
+from app.rag.reranker import rerank
 
 
 def retrieve_chunks(
@@ -22,3 +23,22 @@ def retrieve_chunks(
 
     finally:
         db.close()
+
+
+def retrieve_and_rerank(
+    query: str,
+    retrieval_limit: int = 5,
+    rerank_limit: int = 3,
+):
+    chunks = retrieve_chunks(
+        query=query,
+        limit=retrieval_limit,
+    )
+
+    ranked_chunks = rerank(
+        query=query,
+        chunks=chunks,
+        top_k=rerank_limit,
+    )
+
+    return ranked_chunks
