@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg18
+    container_name: smartdoc_postgres
+
+    environment:
+      POSTGRES_USER: smartdoc_user
+      POSTGRES_PASSWORD: smartdoc_password
+      POSTGRES_DB: smartdoc_db
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:
