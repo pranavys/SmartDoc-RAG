@@ -1,13 +1,19 @@
-from app.rag.retriever import retrieve_chunks
+from app.rag.retriever import retrieve_and_rerank
 
 
-query = "Can employees work remotely?"
+def test_retrieve_and_rerank_returns_results():
+    query = "How many vacation days do employees get?"
 
-chunks = retrieve_chunks(query, limit=3)
+    results = retrieve_and_rerank(
+        query=query,
+        retrieval_limit=5,
+        rerank_limit=3,
+    )
 
-print("===== RETRIEVAL RESULT =====")
-print(f"Number of chunks retrieved: {len(chunks)}")
+    assert results
+    assert len(results) <= 3
 
-for index, chunk in enumerate(chunks):
-    print(f"\n--- Result {index + 1} ---")
-    print(chunk.content)
+    for chunk, score in results:
+        assert chunk.content
+        assert isinstance(chunk.content, str)
+        assert isinstance(score, (int, float))

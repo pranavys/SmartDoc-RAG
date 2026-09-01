@@ -1,20 +1,18 @@
 from app.rag.service import answer_question
 
 
-conversation_id, answer = answer_question(
-    query="How many vacation days do employees get?"
-)
+def test_conversation_keeps_same_conversation_id():
+    conversation_id, first_answer = answer_question(
+        query="How many vacation days do employees get?"
+    )
 
-print("===== FIRST QUESTION =====")
-print(f"Conversation ID: {conversation_id}")
-print(f"Answer: {answer}")
+    assert conversation_id is not None
+    assert first_answer
 
+    second_conversation_id, second_answer = answer_question(
+        query="Can employees work remotely?",
+        conversation_id=conversation_id,
+    )
 
-conversation_id, answer = answer_question(
-    query="Can employees work remotely?",
-    conversation_id=conversation_id,
-)
-
-print("\n===== SECOND QUESTION =====")
-print(f"Conversation ID: {conversation_id}")
-print(f"Answer: {answer}")
+    assert second_conversation_id == conversation_id
+    assert second_answer

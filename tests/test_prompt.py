@@ -1,24 +1,14 @@
 from app.rag.prompts import build_prompt
 
 
-query = "How many vacation days do employees get?"
+def test_build_prompt_contains_context_and_question():
+    context = "Employees receive 30 days of annual leave."
+    query = "How many days of annual leave do employees receive?"
 
-context = """
-Employees receive 30 days of annual leave every year.
-Employees should request annual leave through the HR portal.
-""".strip()
+    prompt = build_prompt(
+        query=query,
+        context=context,
+    )
 
-history = """
-User: What does the employee handbook contain?
-Assistant: It contains company policies including leave and remote work.
-""".strip()
-
-
-prompt = build_prompt(
-    query=query,
-    context=context,
-    history=history,
-)
-
-print("===== FINAL PROMPT =====")
-print(prompt)
+    assert context in prompt
+    assert query in prompt

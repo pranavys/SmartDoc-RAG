@@ -1,17 +1,13 @@
 from app.rag.service import answer_question
 
 
-query = "How many days of annual leave do employees receive?"
+def test_rag_returns_answer_from_documents():
+    query = "How many days of annual leave do employees receive?"
 
-history = """
-User: Tell me about the employee handbook.
-Assistant: It contains company policies about leave, remote work and working hours.
-""".strip()
+    conversation_id, answer = answer_question(
+        query=query,
+    )
 
-
-answer = answer_question(
-    query=query,
-)
-
-print("===== RAG ANSWER =====")
-print(answer)
+    assert conversation_id is not None
+    assert answer
+    assert "30 days" in answer

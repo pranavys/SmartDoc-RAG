@@ -1,13 +1,14 @@
 from app.etl.pipeline import process_document
 
 
-file_path = "data/raw/employee_handbook.docx"
+def test_process_document_returns_chunks():
+    file_path = "data/raw/employee_handbook.docx"
 
-chunks = process_document(file_path)
+    chunks = process_document(file_path)
 
-print("===== ETL PIPELINE RESULT =====")
-print(f"Number of chunks: {len(chunks)}")
+    assert chunks
+    assert isinstance(chunks, list)
 
-for index, chunk in enumerate(chunks):
-    print(f"\n--- Chunk {index} ---")
-    print(chunk)
+    for chunk in chunks:
+        assert chunk
+        assert isinstance(chunk, str)
