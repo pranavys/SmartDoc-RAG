@@ -18,10 +18,28 @@
             <p>Ask questions about your documents</p>
         </header>
 
+        <section class="upload-section">
+
+            <input
+                type="file"
+                id="file-input"
+                accept=".pdf,.docx"
+            >
+
+            <button id="upload-button">
+                Upload Document
+            </button>
+
+            <p id="upload-status"></p>
+
+        </section>
+
         <main id="chat-box">
+
             <div class="message assistant">
-                Hello! Ask me a question about your documents.
+                Hello! Upload a document and ask me a question.
             </div>
+
         </main>
 
         <form id="chat-form">

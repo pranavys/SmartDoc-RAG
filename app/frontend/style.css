@@ -79,3 +79,17 @@ button {
     border-radius: 6px;
     cursor: pointer;
 }
+
+.upload-section {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+#upload-button {
+    margin-left: 10px;
+}
+
+#upload-status {
+    margin-bottom: 0;
+    color: #666;
+}

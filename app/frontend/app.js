@@ -5,6 +5,10 @@ const chatForm = document.getElementById("chat-form");
 const messageInput = document.getElementById("message-input");
 const chatBox = document.getElementById("chat-box");
 
+const fileInput = document.getElementById("file-input");
+const uploadButton = document.getElementById("upload-button");
+const uploadStatus = document.getElementById("upload-status");
+
 
 function addMessage(role, content) {
     const message = document.createElement("div");
@@ -16,6 +20,57 @@ function addMessage(role, content) {
 
     chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+
+uploadButton.addEventListener("click", async function () {
+
+    const file = fileInput.files[0];
+
+    if (!file) {
+        uploadStatus.textContent = "Please select a PDF or DOCX file.";
+        return;
+    }
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    uploadStatus.textContent = "Uploading and processing...";
+
+    try {
+
+        const response = await fetch("/upload", {
+            method: "POST",
+            body: formData
+        });
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Upload failed.");
+        }
+
+
+        uploadStatus.textContent =
+            `${data.filename} uploaded successfully.`;
+
+        addMessage(
+            "assistant",
+            `Document "${data.filename}" is ready for questions.`
+        );
+
+        fileInput.value = "";
+
+    } catch (error) {
+
+        uploadStatus.textContent =
+            error.message;
+
+        console.error(error);
+    }
+});
 
 
 chatForm.addEventListener("submit", async function (event) {
@@ -53,7 +108,7 @@ chatForm.addEventListener("submit", async function (event) {
 
 
         if (!response.ok) {
-            throw new Error("Request failed");
+            throw new Error("Request failed.");
         }
 
 
