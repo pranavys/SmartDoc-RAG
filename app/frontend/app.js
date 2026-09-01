@@ -53,13 +53,19 @@ uploadButton.addEventListener("click", async function () {
         }
 
 
-        uploadStatus.textContent =
-            `${data.filename} uploaded successfully.`;
+        uploadStatus.textContent = data.message;
 
-        addMessage(
-            "assistant",
-            `Document "${data.filename}" is ready for questions.`
-        );
+        if (data.message === "Document uploaded and processed successfully.") {
+            addMessage(
+                "assistant",
+                `Document "${data.filename}" is ready for questions.`
+            );
+        } else {
+            addMessage(
+                "assistant",
+                `Document "${data.filename}" already exists and is ready for questions.`
+            );
+        }
 
         fileInput.value = "";
 

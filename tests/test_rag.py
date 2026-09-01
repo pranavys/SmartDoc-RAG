@@ -1,7 +1,7 @@
 from app.rag.service import answer_question
 
 
-query = "What is the company's maternity leave policy?"
+query = "How many days of annual leave do employees receive?"
 
 history = """
 User: Tell me about the employee handbook.
@@ -11,7 +11,6 @@ Assistant: It contains company policies about leave, remote work and working hou
 
 answer = answer_question(
     query=query,
-    history=history,
 )
 
 print("===== RAG ANSWER =====")
