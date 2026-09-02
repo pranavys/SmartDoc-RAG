@@ -84,7 +84,7 @@ SmartDoc-RAG/
 ### 1. Clone
 
 ```powershell
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/pranavys/SmartDoc-RAG.git
 cd SmartDoc-RAG
 ```
 
