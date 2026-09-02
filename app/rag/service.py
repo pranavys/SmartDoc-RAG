@@ -8,6 +8,7 @@ from app.rag.context import get_relevant_context
 from app.rag.history import format_history
 from app.rag.llm import generate_answer
 from app.rag.prompts import build_prompt
+from app.rag.query_rewriter import rewrite_query
 
 
 def answer_question(
@@ -31,9 +32,15 @@ def answer_question(
 
         history = format_history(messages)
 
+        # Rewrite the query using conversation history
+        retrieval_query = rewrite_query(
+            query=query,
+            history=history,
+        )
+
         # Retrieve and rerank relevant documents
         context = get_relevant_context(
-            query=query,
+            query=retrieval_query,
             retrieval_limit=5,
             rerank_limit=3,
         )

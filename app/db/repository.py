@@ -22,6 +22,17 @@ def create_document(
 
     return document
 
+def get_document_by_filename(
+    db: Session,
+    filename: str,
+) -> Document | None:
+    statement = (
+        select(Document)
+        .where(Document.filename == filename)
+    )
+
+    return db.scalars(statement).first()
+
 
 def create_document_chunk(
     db: Session,
